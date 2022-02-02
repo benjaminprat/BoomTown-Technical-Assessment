@@ -59,7 +59,7 @@ const displayReposIds = async () => {
 
   repoIdsDiv.innerHTML = reposData.map((repo) => {
     return `
-      <section class="single-repo">
+      <section class="single">
         <p>Repo ID: ${repo.id}<p>
       </section>`;
   });
@@ -74,7 +74,7 @@ const displayEventsIds = async () => {
 
   eventIdsDiv.innerHTML = eventsData.map((event) => {
     return `
-    <section class="single-event">
+    <section class="single">
       <p>Event ID: ${event.id}<p>
       </section>`;
   });
@@ -88,13 +88,13 @@ const displayHooksErrorMessage = async () => {
   );
 
   if (hooksData.message === 'Not Found') {
-    hooksIdsDiv.innerHTML = `<section class="single-hook">
+    hooksIdsDiv.innerHTML = `<section class="single">
         <p>No Hooks Found<p>
       </section>`;
   } else {
     hooksIdsDiv.innerHTML = hooksData.map((hook) => {
       return `
-      <section class="single-event">
+      <section class="single">
         <p>Hook ID: ${hook.id}<p>
       </section>`;
     });
@@ -110,7 +110,7 @@ const displayIssuesErrorMessage = async () => {
   );
 
   if (issuesData.message === 'Not Found') {
-    issuesIdsDiv.innerHTML = `<section class="single-issue">
+    issuesIdsDiv.innerHTML = `<section class="single">
         <p>No Issues Found<p>
       </section>`;
   } else {
@@ -152,13 +152,13 @@ const displayPublicMembersErrorMessage = async () => {
   );
 
   if (publicMembersData.message === 'Not Found') {
-    publicMembersIdsDiv.innerHTML = `<section class="single-public-members">
+    publicMembersIdsDiv.innerHTML = `<section class="single">
        <p>No Public Members Found<p>
      </section>`;
   } else {
     publicMembersIdsDiv.innerHTML = publicMembersData.map((member) => {
       return `
-     <section class="single-public-member">
+     <section class="single">
        <p>Public Member ID: ${member.id}<p>
      </section>`;
     });
