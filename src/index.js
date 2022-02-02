@@ -51,6 +51,7 @@ const verifyDates = async () => {
     verifyResultDiv.innerHTML = `Updated date is less recent than created date.`;
   }
 };
+
 const fetchData = async (url) => {
   try {
     const response = await fetch(url);
@@ -172,9 +173,11 @@ const displayPublicMembersErrorMessage = async () => {
 };
 
 const allRepositoryData = async () => {
+  //top level object
   const publicRepos = await fetchData(
     'https://api.github.com/orgs/BoomTownROI'
   );
+
   //The api returns 30 objects per call for repos so we need to know number of pages
   let cycleRequirement = Math.ceil(publicRepos.public_repos / 30);
   let repoCount = 0;
@@ -183,6 +186,7 @@ const allRepositoryData = async () => {
   for (i = 1; i <= cycleRequirement; i++) {
     repoCount += await iterateRepos(i);
   }
+
   compareRepoLength(repoCount, publicRepos.public_repos);
 };
 
