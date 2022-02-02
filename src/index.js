@@ -1,10 +1,15 @@
 var loadDataBtn = document.querySelector('.load-data-btn');
 var verifyDatesBtn = document.querySelector('.verify-dates-btn');
+var compareLengthBtn = document.querySelector('.compare-length-btn');
 
 loadDataBtn.addEventListener('click', (event) => {
   handleClick(event);
 });
 verifyDatesBtn.addEventListener('click', (event) => {
+  handleClick(event);
+});
+
+compareLengthBtn.addEventListener('click', (event) => {
   handleClick(event);
 });
 
@@ -15,6 +20,8 @@ const handleClick = (event) => {
     loadAllData();
   } else if (event.target.classList.contains('verify-dates-btn')) {
     verifyDates();
+  } else if (event.target.classList.contains('compare-length-btn')) {
+    allRepositoryData();
   }
 };
 
@@ -164,4 +171,35 @@ const displayPublicMembersErrorMessage = async () => {
   }
 };
 
-const compareRepoLength = async () => {};
+const allRepositoryData = async () => {
+  const publicRepos = await fetchData(
+    'https://api.github.com/orgs/BoomTownROI'
+  );
+  //The api returns 30 objects per call for repos so we need to know number of pages
+  let cycleRequirement = Math.ceil(publicRepos.public_repos / 30);
+  let repoCount = 0;
+
+  //Iterate over /repos with cycleRequirement as baseline for i
+  for (i = 1; i <= cycleRequirement; i++) {
+    repoCount += await iterateRepos(i);
+  }
+  compareRepoLength(repoCount, publicRepos.public_repos);
+};
+
+const iterateRepos = async (i) => {
+  let data = await fetchData(
+    `https://api.github.com/orgs/BoomTownROI/repos?page=${i}`
+  );
+
+  return data.length;
+};
+
+const compareRepoLength = async (reposLength, publicRepos) => {
+  const resultsDiv = document.querySelector('.length-result-div');
+
+  if (reposLength === publicRepos) {
+    resultsDiv.innerHTML = ` Repositories are the same length.`;
+  } else {
+    resultsDiv.innerHTML = ` Repositories are NOT the same length.`;
+  }
+};
