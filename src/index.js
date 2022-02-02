@@ -10,7 +10,6 @@ const handleClick = (event) => {
 };
 
 const loadAllData = () => {
-  console.log('Success');
   displayReposIds();
   displayEventsIds();
   displayHooksErrorMessage();
@@ -34,6 +33,7 @@ const displayReposIds = async () => {
   let reposData = await fetchData(
     'https://api.github.com/orgs/BoomTownROI/repos'
   );
+
   repoIdsDiv.innerHTML = reposData.map((repo) => {
     return `
     <section class="single-repo">
@@ -47,6 +47,7 @@ const displayEventsIds = async () => {
   let eventsData = await fetchData(
     'https://api.github.com/orgs/BoomTownROI/events'
   );
+
   eventIdsDiv.innerHTML = eventsData.map((event) => {
     return `
     <section class="single-event">
@@ -82,6 +83,7 @@ const displayIssuesErrorMessage = async () => {
   let issuesData = await fetchData(
     'https://api.github.com/orgs/BoomTownROI/issues'
   );
+
   if (issuesData.message === 'Not Found') {
     issuesIdsDiv.innerHTML = `<section class="single-issue">
         <p>No Issues Found<p>
@@ -101,11 +103,11 @@ const displayMembersErrorMessage = async () => {
   let membersData = await fetchData(
     'https://api.github.com/orgs/BoomTownROI/members{/member}'
   );
+
   if (membersData.message === 'Not Found') {
     membersIdsDiv.innerHTML = `<section class="individual-member">
        <p>No Members Found<p>
      </section>`;
-    console.log(membersData);
   } else {
     membersIdsDiv.innerHTML = membersData.map((member) => {
       return `
@@ -121,11 +123,11 @@ const displayPublicMembersErrorMessage = async () => {
   let publicMembersData = await fetchData(
     'https://api.github.com/orgs/BoomTownROI/public_members{/member}'
   );
+
   if (publicMembersData.message === 'Not Found') {
     publicMembersIdsDiv.innerHTML = `<section class="single-public-members">
        <p>No Public Members Found<p>
      </section>`;
-    console.log(publicMembersData);
   } else {
     publicMembersIdsDiv.innerHTML = publicMembersData.map((member) => {
       return `
