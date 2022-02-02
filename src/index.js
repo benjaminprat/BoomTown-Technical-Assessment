@@ -1,12 +1,21 @@
 var loadDataBtn = document.querySelector('.load-data-btn');
+var verifyDatesBtn = document.querySelector('.verify-dates-btn');
 
 loadDataBtn.addEventListener('click', (event) => {
+  handleClick(event);
+});
+verifyDatesBtn.addEventListener('click', (event) => {
   handleClick(event);
 });
 
 const handleClick = (event) => {
   event.preventDefault();
-  event.target.classList.contains('load-data-btn') ? loadAllData() : false;
+  // event.target.classList.contains('load-data-btn') ? loadAllData() : false;
+  if (event.target.classList.contains('load-data-btn')) {
+    loadAllData();
+  } else if (event.target.classList.contains('verify-dates-btn')) {
+    verifyDates();
+  }
 };
 
 const loadAllData = () => {
@@ -18,6 +27,23 @@ const loadAllData = () => {
   displayPublicMembersErrorMessage();
 };
 
+const verifyDates = async () => {
+  const verifyResultDiv = document.querySelector('.verify-result-div');
+  let topLevelData = await fetchData('https://api.github.com/orgs/BoomTownROI');
+
+  let originalCreationDate = await topLevelData.created_at;
+  let newCreationDate = new Date(originalCreationDate);
+
+  let originalUpdateDate = await topLevelData.updated_at;
+  let newUpdateDate = new Date(originalUpdateDate);
+
+  if (newCreationDate < newUpdateDate) {
+    verifyResultDiv.innerHTML = `Updated date is more recent than created date.
+  `;
+  } else {
+    verifyResultDiv.innerHTML = `Updated date is less recent than created date.`;
+  }
+};
 const fetchData = async (url) => {
   try {
     const response = await fetch(url);
