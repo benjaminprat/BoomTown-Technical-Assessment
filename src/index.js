@@ -12,37 +12,26 @@ let issuesData;
 let membersData;
 let publicMembersData;
 
-reposData = fetch('https://api.github.com/orgs/BoomTownROI/repos')
-  .then((data) => data.json())
-  .then((data) => data)
-  .catch((error) => console.log(error.message));
+const fetchData = async (url) => {
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(`Fetch for ${url} failed`);
+  }
+};
 
-eventsData = fetch('https://api.github.com/orgs/BoomTownROI/events')
-  .then((data) => data.json())
-  .then((data) => data)
-  .catch((error) => console.log(error.message));
-
-hooksData = fetch('https://api.github.com/orgs/BoomTownROI/hooks')
-  .then((data) => data.json())
-  .then((data) => data.message)
-  .catch((error) => console.log(error.message));
-
-issuesData = fetch('https://api.github.com/orgs/BoomTownROI/issues')
-  .then((data) => data.json())
-  .then((data) => data.message)
-  .catch((error) => console.log(error.message));
-
-membersData = fetch('https://api.github.com/orgs/BoomTownROI/{/member}')
-  .then((data) => data.json())
-  .then((data) => data.message)
-  .catch((error) => console.log(error.message));
-
-publicMembersData = fetch(
+reposData = fetchData('https://api.github.com/orgs/BoomTownROI/repos');
+eventsData = fetchData('https://api.github.com/orgs/BoomTownROI/events');
+hooksData = fetchData('https://api.github.com/orgs/BoomTownROI/hooks');
+issuesData = fetchData('https://api.github.com/orgs/BoomTownROI/issues');
+membersData = fetchData(
+  'https://api.github.com/orgs/BoomTownROI/members{/member}'
+);
+publicMembersData = fetchData(
   'https://api.github.com/orgs/BoomTownROI/public_members{/member}'
-)
-  .then((data) => data.json())
-  .then((data) => data.message)
-  .catch((error) => console.log(error.message));
+);
 
 Promise.all([
   reposData,
