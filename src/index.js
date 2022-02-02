@@ -2,11 +2,15 @@ var repoIdsDiv = document.querySelector('.repos-id-div');
 var eventIdsDiv = document.querySelector('.events-id-div');
 var hooksIdsDiv = document.querySelector('.hooks-id-div');
 var issuesIdsDiv = document.querySelector('.issues-id-div');
+var membersIdsDiv = document.querySelector('.members-id-div');
+var publicMembersIdsDiv = document.querySelector('.public-members-id-div');
 
 let reposData;
 let eventsData;
 let hooksData;
 let issuesData;
+let membersData;
+let publicMembersData;
 
 reposData = fetch('https://api.github.com/orgs/BoomTownROI/repos')
   .then((data) => data.json())
@@ -28,20 +32,41 @@ issuesData = fetch('https://api.github.com/orgs/BoomTownROI/issues')
   .then((data) => data.message)
   .catch((error) => console.log(error.message));
 
-console.log(reposData);
+membersData = fetch('https://api.github.com/orgs/BoomTownROI/{/member}')
+  .then((data) => data.json())
+  .then((data) => data.message)
+  .catch((error) => console.log(error.message));
 
-Promise.all([reposData, eventsData, hooksData, issuesData])
+publicMembersData = fetch(
+  'https://api.github.com/orgs/BoomTownROI/public_members{/member}'
+)
+  .then((data) => data.json())
+  .then((data) => data.message)
+  .catch((error) => console.log(error.message));
+
+Promise.all([
+  reposData,
+  eventsData,
+  hooksData,
+  issuesData,
+  membersData,
+  publicMembersData,
+])
   .then((data) => {
     reposData = data;
     eventsData = data;
     hooksData = data;
     issuesData = data;
+    membersData = data;
+    publicMembersData = data;
   })
   .then(() => {
     displayReposIds(reposData);
     displayEventsIds(eventsData);
     displayHooksErrorMessage(hooksData);
     displayIssuesErrorMessage(issuesData);
+    displayMembersErrorMessage(membersData);
+    displayPublicMembersErrorMessage(publicMembersData);
   })
   .catch((error) => {
     console.log(error.message);
@@ -70,7 +95,6 @@ const displayHooksErrorMessage = (hooks) => {
     hooksIdsDiv.innerHTML = `<section class="single-hook">
         <p>No Hooks Found<p>
       </section>`;
-    console.log(hooks[2]);
   } else {
     hooksIdsDiv.innerHTML = hooks[2].map((hook) => {
       return `
@@ -86,13 +110,44 @@ const displayIssuesErrorMessage = (issues) => {
     issuesIdsDiv.innerHTML = `<section class="single-issue">
         <p>No Issues Found<p>
       </section>`;
-    console.log(issue[3]);
   } else {
     issuesIdsDiv.innerHTML = issues[3].map((issue) => {
       return `
       <section class="individual-issue">
         <p>Issue ID: ${issue.id}<p>
       </section>`;
+    });
+  }
+};
+
+const displayMembersErrorMessage = (members) => {
+  if (members[4] === 'Not Found') {
+    membersIdsDiv.innerHTML = `<section class="individual-member">
+       <p>No Members Found<p>
+     </section>`;
+    console.log(members[4]);
+  } else {
+    membersIdsDiv.innerHTML = members[4].map((member) => {
+      return `
+     <section class="individual-member">
+       <p>Member ID: ${member.id}<p>
+     </section>`;
+    });
+  }
+};
+
+const displayPublicMembersErrorMessage = (publicMembers) => {
+  if (publicMembers[5] === 'Not Found') {
+    publicMembersIdsDiv.innerHTML = `<section class="single-public-members">
+       <p>No Public Members Found<p>
+     </section>`;
+    console.log(publicMembers[5]);
+  } else {
+    publicMembersIdsDiv.innerHTML = publicMembers[5].map((member) => {
+      return `
+     <section class="single-public-member">
+       <p>Public Member ID: ${member.id}<p>
+     </section>`;
     });
   }
 };

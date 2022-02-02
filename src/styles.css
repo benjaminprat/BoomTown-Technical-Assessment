@@ -23,7 +23,9 @@ h1 {
 .repository-section,
 .events-section,
 .hooks-section,
-.issues-section {
+.issues-section,
+.members-section,
+.public-members-section {
   width: 100%;
   border: solid 1px orange;
   display: flex;
@@ -34,13 +36,17 @@ h1 {
 .repos-title,
 .events-title,
 .hooks-title,
-.issues-title {
+.issues-title,
+.members-title,
+.public-members-title {
 }
 
 .repos-id-div,
 .events-id-div,
 .hooks-id-div,
-.issues-id-div {
+.issues-id-div,
+.members-id-div,
+.public-members-id-div {
   display: flex;
   width: 90%;
   height: 100%;
@@ -51,6 +57,8 @@ h1 {
 .single-repo,
 .single-event,
 .single-hook,
-.single-issue {
+.single-issue,
+.single-member,
+.single-public-members {
   margin: 0 2%;
 }
