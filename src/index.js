@@ -6,15 +6,17 @@ loadDataBtn.addEventListener('click', (event) => {
 
 const handleClick = (event) => {
   event.preventDefault();
-  // refactor when functional
-  if (event.target.classList.contains('load-data-btn')) {
-    displayReposIds();
-    // displayEventsIds();
-    // displayHooksErrorMessage();
-    // displayIssuesErrorMessage();
-    // displayMembersErrorMessage();
-    // displayPublicMembersErrorMessage();
-  }
+  event.target.classList.contains('load-data-btn') ? loadAllData() : false;
+};
+
+const loadAllData = () => {
+  console.log('Success');
+  displayReposIds();
+  displayEventsIds();
+  displayHooksErrorMessage();
+  displayIssuesErrorMessage();
+  displayMembersErrorMessage();
+  displayPublicMembersErrorMessage();
 };
 
 const fetchData = async (url) => {
