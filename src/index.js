@@ -10,7 +10,7 @@ verifyDatesBtn.addEventListener('click', (event) => {
 
 const handleClick = (event) => {
   event.preventDefault();
-  // event.target.classList.contains('load-data-btn') ? loadAllData() : false;
+
   if (event.target.classList.contains('load-data-btn')) {
     loadAllData();
   } else if (event.target.classList.contains('verify-dates-btn')) {
@@ -163,3 +163,5 @@ const displayPublicMembersErrorMessage = async () => {
     });
   }
 };
+
+const compareRepoLength = async () => {};
