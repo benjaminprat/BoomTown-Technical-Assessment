@@ -1,10 +1,12 @@
 var repoIdsDiv = document.querySelector('.repos-id-div');
 var eventIdsDiv = document.querySelector('.events-id-div');
 var hooksIdsDiv = document.querySelector('.hooks-id-div');
+var issuesIdsDiv = document.querySelector('.issues-id-div');
 
 let reposData;
 let eventsData;
 let hooksData;
+let issuesData;
 
 reposData = fetch('https://api.github.com/orgs/BoomTownROI/repos')
   .then((data) => data.json())
@@ -21,18 +23,25 @@ hooksData = fetch('https://api.github.com/orgs/BoomTownROI/hooks')
   .then((data) => data.message)
   .catch((error) => console.log(error.message));
 
+issuesData = fetch('https://api.github.com/orgs/BoomTownROI/issues')
+  .then((data) => data.json())
+  .then((data) => data.message)
+  .catch((error) => console.log(error.message));
+
 console.log(reposData);
 
-Promise.all([reposData, eventsData, hooksData])
+Promise.all([reposData, eventsData, hooksData, issuesData])
   .then((data) => {
     reposData = data;
     eventsData = data;
     hooksData = data;
+    issuesData = data;
   })
   .then(() => {
     displayReposIds(reposData);
     displayEventsIds(eventsData);
     displayHooksErrorMessage(hooksData);
+    displayIssuesErrorMessage(issuesData);
   })
   .catch((error) => {
     console.log(error.message);
@@ -67,6 +76,22 @@ const displayHooksErrorMessage = (hooks) => {
       return `
       <section class="single-event">
         <p>Hook ID: ${hook.id}<p>
+      </section>`;
+    });
+  }
+};
+
+const displayIssuesErrorMessage = (issues) => {
+  if (issues[3] === 'Not Found') {
+    issuesIdsDiv.innerHTML = `<section class="single-issue">
+        <p>No Issues Found<p>
+      </section>`;
+    console.log(issue[3]);
+  } else {
+    issuesIdsDiv.innerHTML = issues[3].map((issue) => {
+      return `
+      <section class="individual-issue">
+        <p>Issue ID: ${issue.id}<p>
       </section>`;
     });
   }
