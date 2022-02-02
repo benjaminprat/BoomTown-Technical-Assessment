@@ -1,4 +1,5 @@
 var repoIdsDiv = document.querySelector('.repos-id-div');
+var eventIdsDiv = document.querySelector('.events-id-div');
 
 let reposData;
 let eventsData;
@@ -40,4 +41,10 @@ const displayReposIds = (repos) => {
 
 const displayEventsIds = (events) => {
   console.log(events[1], 'events');
+  eventIdsDiv.innerHTML = events[1].map((event) => {
+    return `
+    <section class="single-event">
+      <p>Repository ID: ${event.id}<p>
+      </section>`;
+  });
 };
