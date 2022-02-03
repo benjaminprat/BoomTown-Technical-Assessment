@@ -1,33 +1,19 @@
-//Select elements from HTML and assign as variables
-
 var loadDataBtn = document.querySelector('.load-data-btn');
 var verifyDatesBtn = document.querySelector('.verify-dates-btn');
 var compareLengthBtn = document.querySelector('.compare-length-btn');
 
-// Notififying the DOM of click event which invokes clickHandler
 loadDataBtn.addEventListener('click', (event) => {
-  handleClick(event);
+  event.preventDefault();
+  loadAllData();
 });
 verifyDatesBtn.addEventListener('click', (event) => {
-  handleClick(event);
-});
-
-compareLengthBtn.addEventListener('click', (event) => {
-  handleClick(event);
-});
-
-//Functions invoked dynamically depending on particular button clicked
-const handleClick = (event) => {
   event.preventDefault();
-
-  if (event.target.classList.contains('load-data-btn')) {
-    loadAllData();
-  } else if (event.target.classList.contains('verify-dates-btn')) {
-    verifyDates();
-  } else if (event.target.classList.contains('compare-length-btn')) {
-    allRepositoryData();
-  }
-};
+  verifyDates();
+});
+compareLengthBtn.addEventListener('click', (event) => {
+  event.preventDefault();
+  allRepositoryData();
+});
 
 //Helper function to fetch and display data and error messages
 const loadAllData = () => {
@@ -39,7 +25,7 @@ const loadAllData = () => {
   displayPublicMembersErrorMessage();
 };
 
-//Reusable function to parse data or throws error if fetch fails
+//Reusable function to parse data or throw error if fetch fails
 const fetchData = async (url) => {
   try {
     const response = await fetch(url);
@@ -175,18 +161,18 @@ const verifyDates = async () => {
 
   // Selects given date from top level
   let originalCreationDate = await topLevelData.created_at;
-  let originalUpdateDate = await topLevelData.updated_at;
+  let originalUpdatedDate = await topLevelData.updated_at;
 
   //Converts original date for comparison
   let newCreationDate = new Date(originalCreationDate);
-  let newUpdateDate = new Date(originalUpdateDate);
+  let newUpdatedDate = new Date(originalUpdatedDate);
 
   //Compares dates and displays results
-  if (newCreationDate < newUpdateDate) {
-    verifyResultDiv.innerHTML = `Updated date is more recent than created date.
+  if (newCreationDate < newUpdatedDate) {
+    verifyResultDiv.innerHTML = `Updated at date is more recent than created at date.
   `;
   } else {
-    verifyResultDiv.innerHTML = `Updated date is less recent than created date.`;
+    verifyResultDiv.innerHTML = `Updated at date is less recent than created at date.`;
   }
 };
 
@@ -196,7 +182,7 @@ const allRepositoryData = async () => {
     'https://api.github.com/orgs/BoomTownROI'
   );
 
-  //The api returns 30 objects per call for repos so we need to know number of pages
+  //The api returns 30 objects per call by default
   let cycleRequirement = Math.ceil(publicRepos.public_repos / 30);
   let repoCount = 0;
 
