@@ -1,5 +1,20 @@
 # BoomTown-Technical-Assessment
 
+![BT-Assessment ](https://media.giphy.com/media/kr8xzyh4nszh8ipoQ5/giphy.gif "Desktop")
+
+---
+ ## Installation
+**Clone this repository**
+* `git clone`   https://github.com/benjaminprat/boomtown-technical-assessment
+
+**Change into the src directory 
+
+* `cd` into directory 
+* run  `open index.html`
+
+
+
+
 Here are the requirements:
 Using the GitHub API and your language of choice, pull top-level details for the BoomTownROI organization at:
 https://api.github.com/orgs/boomtownroiFrom the top-level organization details result object, complete the following:
