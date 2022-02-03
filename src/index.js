@@ -57,12 +57,14 @@ const displayReposIds = async () => {
     'https://api.github.com/orgs/BoomTownROI/repos'
   );
 
-  repoIdsDiv.innerHTML = reposData.map((repo) => {
-    return `
+  repoIdsDiv.innerHTML = reposData
+    .map((repo) => {
+      return `
       <section class="single">
-        <p>Repo ID: ${repo.id}<p>
+        <p>Repo ID: ${repo.id}</p>
       </section>`;
-  });
+    })
+    .join('');
 };
 
 //Displays event id's after fetch.
@@ -72,12 +74,14 @@ const displayEventsIds = async () => {
     'https://api.github.com/orgs/BoomTownROI/events'
   );
 
-  eventIdsDiv.innerHTML = eventsData.map((event) => {
-    return `
+  eventIdsDiv.innerHTML = eventsData
+    .map((event) => {
+      return `
     <section class="single">
-      <p>Event ID: ${event.id}<p>
+      <p>Event ID: ${event.id}</p>
       </section>`;
-  });
+    })
+    .join('');
 };
 
 //Displays hooks error message after fetch.
@@ -89,13 +93,13 @@ const displayHooksErrorMessage = async () => {
 
   if (hooksData.message === 'Not Found') {
     hooksIdsDiv.innerHTML = `<section class="single">
-        <p>No Hooks Found<p>
+        <p>No Hooks Found</p>
       </section>`;
   } else {
     hooksIdsDiv.innerHTML = hooksData.map((hook) => {
       return `
       <section class="single">
-        <p>Hook ID: ${hook.id}<p>
+        <p>Hook ID: ${hook.id}</p>
       </section>`;
     });
   }
@@ -111,13 +115,13 @@ const displayIssuesErrorMessage = async () => {
 
   if (issuesData.message === 'Not Found') {
     issuesIdsDiv.innerHTML = `<section class="single">
-        <p>No Issues Found<p>
+        <p>No Issues Found</p>
       </section>`;
   } else {
     issuesIdsDiv.innerHTML = issuesData.map((issue) => {
       return `
       <section class="individual-issue">
-        <p>Issue ID: ${issue.id}<p>
+        <p>Issue ID: ${issue.id}</p>
       </section>`;
     });
   }
@@ -132,13 +136,13 @@ const displayMembersErrorMessage = async () => {
 
   if (membersData.message === 'Not Found') {
     membersIdsDiv.innerHTML = `<section class="individual-member">
-       <p>No Members Found<p>
+       <p>No Members Found</p>
      </section>`;
   } else {
     membersIdsDiv.innerHTML = membersData.map((member) => {
       return `
      <section class="individual-member">
-       <p>Member ID: ${member.id}<p>
+       <p>Member ID: ${member.id}</p>
      </section>`;
     });
   }
@@ -153,13 +157,13 @@ const displayPublicMembersErrorMessage = async () => {
 
   if (publicMembersData.message === 'Not Found') {
     publicMembersIdsDiv.innerHTML = `<section class="single">
-       <p>No Public Members Found<p>
+       <p>No Public Members Found</p>
      </section>`;
   } else {
     publicMembersIdsDiv.innerHTML = publicMembersData.map((member) => {
       return `
      <section class="single">
-       <p>Public Member ID: ${member.id}<p>
+       <p>Public Member ID: ${member.id}</p>
      </section>`;
     });
   }
@@ -169,15 +173,15 @@ const verifyDates = async () => {
   const verifyResultDiv = document.querySelector('.verify-result-div');
   let topLevelData = await fetchData('https://api.github.com/orgs/BoomTownROI');
 
-// Selects given date from top level
+  // Selects given date from top level
   let originalCreationDate = await topLevelData.created_at;
   let originalUpdateDate = await topLevelData.updated_at;
 
-//Converts original date for comparison
+  //Converts original date for comparison
   let newCreationDate = new Date(originalCreationDate);
   let newUpdateDate = new Date(originalUpdateDate);
 
-//Compares dates and displays results
+  //Compares dates and displays results
   if (newCreationDate < newUpdateDate) {
     verifyResultDiv.innerHTML = `Updated date is more recent than created date.
   `;
@@ -201,7 +205,7 @@ const allRepositoryData = async () => {
     repoCount += await iterateRepos(i);
   }
 
-//Helper function invocation(total repo objects,public repos value(integer))
+  //Helper function invocation(total repo objects,public repos value(integer))
   compareRepoLength(repoCount, publicRepos.public_repos);
 };
 
@@ -209,7 +213,7 @@ const iterateRepos = async (i) => {
   let data = await fetchData(
     `https://api.github.com/orgs/BoomTownROI/repos?page=${i}`
   );
-//Number of objects from fetch of each page.
+  //Number of objects from fetch of each page.
   return data.length;
 };
 

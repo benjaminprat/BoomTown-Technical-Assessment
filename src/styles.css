@@ -12,7 +12,6 @@ main {
   display: flex;
   flex-direction: column;
   height: 80%;
-  
 }
 
 h1 {
@@ -47,7 +46,7 @@ h1 {
   width: 90%;
 }
 
-.single{
+.single {
   margin: 0 2%;
 }
 
@@ -64,7 +63,7 @@ h1 {
 }
 
 .load-data-btn {
-  cursor:pointer;
+  cursor: pointer;
 }
 
 .verify-dates-section {
@@ -86,7 +85,7 @@ h1 {
 }
 
 .compare-length-btn {
-  cursor:pointer;
+  cursor: pointer;
 }
 
 .compare-length-section {
